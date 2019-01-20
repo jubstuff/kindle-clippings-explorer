@@ -1,4 +1,4 @@
-function parseDateLine( dateTextLine ) {
+const parseDateLine = ( dateTextLine ) => {
 
   const ITALIAN_MONTH_NAMES = {
     'gennaio': '01',
@@ -27,20 +27,20 @@ function parseDateLine( dateTextLine ) {
   year = parseInt( year ) + BASE_YEAR;
 
   return new Date( `${year}-${month}-${day}T${hour}` )
-}
+};
 
+const parsePositionLine = ( positionTextLine ) => {
+  return positionTextLine.match( /(Pos\.) (.+)/ )[2].trim()
+};
 module.exports = clippingText => {
   const lines = clippingText.trim().split( /\r?\n/ );
-
-  const metaText = lines[1].trim();
-  const metaTextLines = metaText.split( '|' );
-  const positionText = metaTextLines[0].trim();
+  const metaTextLines = lines[1].trim().split( '|' );
 
   return {
     'title': lines[0].trim(),
     'meta': {
-      'date': parseDateLine( metaTextLines[1].trim() ),
-      'position': ''
+      'position': parsePositionLine(metaTextLines[0].trim()),
+      'date': parseDateLine( metaTextLines[1].trim() )
     },
     'text': lines[3].trim()
   }

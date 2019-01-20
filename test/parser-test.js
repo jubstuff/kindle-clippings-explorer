@@ -36,6 +36,7 @@ Lag time is the amount of time that passes between a change that you make and th
     expect( meta.date.getMonth() ).to.equal( 0 );
     expect( meta.date.getFullYear() ).to.equal( 2019 );
     expect( meta ).to.have.property( 'position' );
+    expect( meta.position ).to.equal( '2063-64' );
 
 
   } )
