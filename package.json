@@ -1,0 +1,23 @@
+{
+  "name": "kindle-clippings-explorer",
+  "version": "0.0.1",
+  "description": "A simple script to let you explore your Kindle Clippings",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "kindle",
+    "clippings"
+  ],
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.4",
+    "mocha": "^5.2.0"
+  },
+  "author": "Giustino Borzacchiello <giustinob@gmail.com>",
+  "license": "MIT"
+}
