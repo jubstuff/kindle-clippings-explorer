@@ -32,17 +32,22 @@ const parseDateLine = ( dateTextLine ) => {
 const parsePositionLine = ( positionTextLine ) => {
   return positionTextLine.match( /(Pos\.) (.+)/ )[2].trim()
 };
+
+const parseTitleLine = ( titleTextLine ) => {
+  return titleTextLine.trim().match( /(.*) \((.*)\)/ );
+};
+
 module.exports = clippingText => {
   const lines = clippingText.trim().split( /\r?\n/ );
   const metaTextLines = lines[1].trim().split( '|' );
 
-  const [full, title, author] = lines[0].trim().match(/(.*) \((.*)\)/);
+  const [full, title, author] = parseTitleLine( lines[0] );
 
   return {
     'title': title,
     'author': author,
     'meta': {
-      'position': parsePositionLine(metaTextLines[0].trim()),
+      'position': parsePositionLine( metaTextLines[0].trim() ),
       'date': parseDateLine( metaTextLines[1].trim() )
     },
     'text': lines[3].trim()
