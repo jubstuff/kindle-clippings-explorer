@@ -17,6 +17,9 @@ Lag time is the amount of time that passes between a change that you make and th
     const clipping = parse( text );
 
     expect( clipping ).to.have.property( 'title' );
+    expect( clipping.title).to.equal('Working Effectively with Legacy Code, First Edition');
+    expect( clipping ).to.have.property( 'author' );
+    expect( clipping.author).to.equal('Michael Feathers');
     expect( clipping ).to.have.property( 'meta' );
     expect( clipping ).to.have.property( 'text' );
     expect( clipping.text).to.equal('Lag time is the amount of time that passes between a change that you make and the moment that you get real feedback about the change.');

@@ -36,8 +36,11 @@ module.exports = clippingText => {
   const lines = clippingText.trim().split( /\r?\n/ );
   const metaTextLines = lines[1].trim().split( '|' );
 
+  const [full, title, author] = lines[0].trim().match(/(.*) \((.*)\)/);
+
   return {
-    'title': lines[0].trim(),
+    'title': title,
+    'author': author,
     'meta': {
       'position': parsePositionLine(metaTextLines[0].trim()),
       'date': parseDateLine( metaTextLines[1].trim() )
