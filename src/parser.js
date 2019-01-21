@@ -39,6 +39,11 @@ const parseTitleLine = ( titleTextLine ) => {
 
 module.exports = clippingText => {
   const lines = clippingText.trim().split( /\r?\n/ );
+
+  if( lines.length < 4 ) {
+    throw new Error('Invalid Clipping to parse')
+  }
+
   const metaTextLines = lines[1].trim().split( '|' );
 
   const [full, title, author] = parseTitleLine( lines[0] );

@@ -17,12 +17,12 @@ Lag time is the amount of time that passes between a change that you make and th
     const clipping = parse( text );
 
     expect( clipping ).to.have.property( 'title' );
-    expect( clipping.title).to.equal('Working Effectively with Legacy Code, First Edition');
+    expect( clipping.title ).to.equal( 'Working Effectively with Legacy Code, First Edition' );
     expect( clipping ).to.have.property( 'author' );
-    expect( clipping.author).to.equal('Michael Feathers');
+    expect( clipping.author ).to.equal( 'Michael Feathers' );
     expect( clipping ).to.have.property( 'meta' );
     expect( clipping ).to.have.property( 'text' );
-    expect( clipping.text).to.equal('Lag time is the amount of time that passes between a change that you make and the moment that you get real feedback about the change.');
+    expect( clipping.text ).to.equal( 'Lag time is the amount of time that passes between a change that you make and the moment that you get real feedback about the change.' );
   } );
 
   it( 'should extract correct position and date for the clipping', () => {
@@ -41,7 +41,16 @@ Lag time is the amount of time that passes between a change that you make and th
     expect( meta.date.getFullYear() ).to.equal( 2019 );
     expect( meta ).to.have.property( 'position' );
     expect( meta.position ).to.equal( '2063-64' );
-  } )
+  } );
 
+  it( 'should throw error on empty highlighting', () => {
+    const clippingText = `Le nuove regole della scrittura: Strategie e strumenti per creare contenuti di sucesso (Italian Edition) (Ann Handley)
+- Segnalibro Pos. 2512  | Aggiunto il giovedì 3 novembre 16 18:03:21 Ora media di Greenwich
+
+
+`;
+    const call = () => { parse( clippingText ) };
+    expect(call).to.throw(Error, 'Invalid Clipping to parse');
+  } );
 
 } );
