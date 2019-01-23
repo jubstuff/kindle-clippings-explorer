@@ -22,7 +22,7 @@ const parseDateLine = ( dateTextLine ) => {
   const regex = /([A-Za-zì]+) (\d+) ([a-z]*) (\d+) (\d{2}:\d{2}:\d{2})/gm;
   let [full, dayName, day, month, year, hour] = regex.exec( dateText );
 
-  day = parseInt( day );
+  day = day.padStart(2, '0');
   month = ITALIAN_MONTH_NAMES[month];
   year = parseInt( year ) + BASE_YEAR;
 
@@ -37,14 +37,32 @@ const parseTitleLine = ( titleTextLine ) => {
   return titleTextLine.trim().match( /(.*) \((.*)\)/ );
 };
 
+const getMetaPieces = ( metaTextLine ) => {
+  const pieces = metaTextLine.trim().split( '|' );
+  if( pieces.length === 2 ) {
+    // only with position
+    return {
+      'positionText': pieces[0].trim(),
+      'dateText': pieces[1].trim()
+    }
+  }
+
+  // with pages
+  return {
+    'pageText': pieces[0].trim(),
+    'positionText': pieces[1].trim(),
+    'dateText': pieces[2].trim()
+  }
+
+};
+
 module.exports = clippingText => {
   const lines = clippingText.trim().split( /\r?\n/ );
-
   if( lines.length < 4 ) {
     throw new Error('Invalid Clipping to parse')
   }
 
-  const metaTextLines = lines[1].trim().split( '|' );
+  const metaPieces = getMetaPieces(lines[1]);
 
   const [full, title, author] = parseTitleLine( lines[0] );
 
@@ -52,8 +70,8 @@ module.exports = clippingText => {
     'title': title,
     'author': author,
     'meta': {
-      'position': parsePositionLine( metaTextLines[0].trim() ),
-      'date': parseDateLine( metaTextLines[1].trim() )
+      'position': parsePositionLine( metaPieces.positionText ),
+      'date': parseDateLine( metaPieces.dateText )
     },
     'text': lines[3].trim()
   }

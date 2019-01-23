@@ -53,4 +53,20 @@ Lag time is the amount of time that passes between a change that you make and th
     expect(call).to.throw(Error, 'Invalid Clipping to parse');
   } );
 
+  it( 'should extract correct date for the clipping', () => {
+    const clippingText = `Mastery (Robert Greene)
+- Evidenziazione a pagina 47 | Pos. 717-18  | Aggiunta il domenica 1 maggio 16 21:40:19 Ora media di Greenwich
+
+Work is often seen as a means for making money so we can enjoy that second life that we lead. Even if we derive some satisfaction from our careers we still tend to compartmentalize our lives in this way.`;
+
+    const clipping = parse( clippingText ),
+      meta = clipping.meta;
+    expect( meta ).to.be.an( 'object' );
+    expect( meta ).to.have.property( 'date' );
+    expect( meta.date ).to.be.a( 'date' );
+    expect( meta.date.getDate() ).to.equal( 1 );
+    expect( meta.date.getMonth() ).to.equal( 4 );
+    expect( meta.date.getFullYear() ).to.equal( 2016 );
+  } );
+
 } );
